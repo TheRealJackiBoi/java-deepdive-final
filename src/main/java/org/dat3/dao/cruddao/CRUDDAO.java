@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManagerFactory;
 
 import java.util.List;
 //generic dao class that can be used for CRUD operations for all entities
-public abstract class CRUDDAO <T> implements DAOInterface<T> {
+abstract class CRUDDAO<T> implements DAOInterface<T> {
 
     private EntityManagerFactory emf;
 
