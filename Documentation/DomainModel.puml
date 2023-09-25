@@ -4,9 +4,11 @@ Class Country
 {
     String name
     int gdp
-    String area
+    double area
     int gdp_growth
-    String Iso2
+    int gdp_per_capita
+    String iso2
+    int population
 }
 
 Class Currency
