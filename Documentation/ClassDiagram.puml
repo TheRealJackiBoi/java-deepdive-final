@@ -35,8 +35,6 @@ class TradeDTO {
 }
 
 abstract class Fetcher {
-    -String url
-
     +abstract Elements fetch(String url)
 }
 

@@ -1,4 +1,9 @@
 package org.dat3.utils;
 
-public class Fetcher {
+import org.jsoup.select.Elements;
+
+public interface Fetcher {
+
+    public Elements fetch(String url);
+
 }
