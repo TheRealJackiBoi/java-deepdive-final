@@ -1,0 +1,89 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+
+class Currency {
+    -String name
+    -String code
+    -int id
+}
+
+class Country {
+    -int id
+    -String name
+    -String isoCode
+    -double gdp
+    -double gdpGrowth
+    -double population
+    -double area
+}
+
+class Value {
+    -int id
+    -LocalDateTime dateTime
+    -double value
+    -Currency currency
+}
+
+class TradeDTO {
+    -int id
+    -Currency base
+    -Currency quote
+    -double change
+    -String symbol
+}
+
+abstract class Fetcher {
+    -String url
+
+    +abstract Elements fetch(String url)
+}
+
+class TradeFetcher extends Fetcher {
+
+    +Elements fetch()
+}
+
+class CountryFetcher extends Fetcher {
+
+    +Elements fetch()
+}
+
+abstract class CRUDDAO {
+    +abstract void create(Object o)
+    +abstract Object read(int id)
+    +abstract void update(Object o)
+    +abstract void delete(int id)
+}
+
+class CountryDAO extends CRUDDAO{
+    +void create(Country country)
+    +Country read(int id)
+    +void update(Country country)
+    +void delete(int id)
+}
+
+class CurrencyDAO extends CRUDDAO{
+    +void create(Currency currency)
+    +Currency read(int id)
+    +void update(Currency currency)
+    +void delete(int id)
+}
+
+class ValueDAO extends CRUDDAO{
+    +void create(Value value)
+    +Value read(int id)
+    +void update(Value value)
+    +void delete(int id)
+}
+
+class TradeValueConverter {
+    +List<Value> convert(Elements elements)
+}
+
+
+
+
+
+@enduml
