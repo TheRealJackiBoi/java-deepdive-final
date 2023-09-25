@@ -1,0 +1,26 @@
+@startuml
+
+Class Country
+{
+    String name
+    int gdp
+    String area
+    int gdp_growth
+    String Iso2
+}
+
+Class Currency
+{
+    String name
+    String code
+}
+
+Class Value
+{
+    Datetime datetime
+    int value[usd]
+}
+
+Country "*"--*"1" Currency
+Currency "*"--*"1" Value
+@enduml
