@@ -10,18 +10,16 @@ public class TradeFetcher implements Fetcher {
     @Override
     public Elements fetch(String url) {
         // URL to scrape data from
-        url = "https://finance.yahoo.com/currencies";
+        url = "https://www.valutakurser.dk/";
 
         try {
             Document doc = Jsoup.connect(url).get();
 
-            Elements data = doc.select("//*[@id=\"yfin-list\"]/div[2]");
-            data.addAll(doc.select("//*[@id=\"yfin-list\"]/div[2]"));
-
-            return data;
+            // Returns all currency related data in the div to scrape
+            return doc.select("div.currenciesList_popularCurrenciesContent__9WNtx");
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("An error occurred while attempting to scrape the URL.");
         }
     }
 }
