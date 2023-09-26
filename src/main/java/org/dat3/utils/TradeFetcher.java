@@ -7,8 +7,8 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 
 public class TradeFetcher implements Fetcher {
-    @Override
-    public Elements fetch(String url) {
+
+    public static Elements fetch(String url) {
         // URL to scrape data from
         url = "https://www.valutakurser.dk/";
 
@@ -16,7 +16,8 @@ public class TradeFetcher implements Fetcher {
             Document doc = Jsoup.connect(url).get();
 
             // Returns all currency related data in the div to scrape
-            return doc.select("div.currenciesList_popularCurrenciesContent__9WNtx");
+            //return doc.select("div.currenciesList_popularCurrenciesContent__9WNtx");
+            return doc.select("div.index_alphabeticalOrderContent__t3YSE");
 
         } catch (IOException e) {
             throw new RuntimeException("An error occurred while attempting to scrape the URL.");
