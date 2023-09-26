@@ -14,11 +14,6 @@ import java.util.stream.Collectors;
 public class TradeExtractor {
 
     public static List<Value> extractData(Elements elements) {
-
-        // check om currency eksisterer, ellers opret en
-        // returner en value
-
-
         //EntityManagerFactory emf = HibernateConfig.createEntityManagerFactoryConfig("DBNAME");
 
         CurrencyDAO currencyDAO = CurrencyDAO.getInstance();
@@ -42,10 +37,15 @@ public class TradeExtractor {
                     String change = element.select("div.currencyItem_currencyChangeContainer__pV3ni").text().replace(",", ".");
                     String[] separateChange = change.split(" ");
 
-                    // Creates a separate object for each value
+                    // Creates objects from the scraped data
                     List<Value> subValues = Arrays.stream(separateDoubles)
                             .map(doubleValue -> {
+                                // Assigns a current currency to the object, but if it is not found, creates a new currency
                                 Currency currency = currencyDAO.findById(Currency.class, codes);
+                                if (currency == null) {
+                                    currency = new Currency(names, codes);
+                                    currencyDAO.create(currency);
+                                }
                                 return new Value(
                                     Double.parseDouble(doubleValue),
                                     LocalDateTime.now(),
