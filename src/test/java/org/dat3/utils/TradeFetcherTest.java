@@ -16,5 +16,8 @@ class TradeFetcherTest {
 
     @Test
     void fetch() {
+        String url = "https://finance.yahoo.com/currencies";
+        TradeFetcher tf = new TradeFetcher();
+        System.out.println(tf.fetch(url));
     }
 }

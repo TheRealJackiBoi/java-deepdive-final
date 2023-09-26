@@ -15,17 +15,13 @@ public class TradeFetcher implements Fetcher {
         try {
             Document doc = Jsoup.connect(url).get();
 
+            Elements data = doc.select("//*[@id=\"yfin-list\"]/div[2]");
+            data.addAll(doc.select("//*[@id=\"yfin-list\"]/div[2]"));
 
-
-
-
-
-
+            return data;
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        return null;
     }
 }
