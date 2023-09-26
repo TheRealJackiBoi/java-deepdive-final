@@ -22,7 +22,7 @@ public class Value {
     @Column(name = "value")
     private Double value;
 
-    @Column(name = "dateTime")
+    @Column(name = "date_time")
     private LocalDateTime dateTime;
 
     @ManyToOne
