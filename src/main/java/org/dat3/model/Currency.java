@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -13,33 +14,37 @@ import java.util.Set;
 @Table(name = "currency")
 @ToString
 @Entity
-
 public class Currency {
 
+    //Valuta code
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, unique = true)
-    private int id;
+    @Column(name = "code", nullable = false, unique = true)
+    private String code;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "code")
-    private String code;
-
     @ToString.Exclude
     @OneToMany(mappedBy = "currency", fetch = FetchType.EAGER)
-    private Set<Country> countrySet;
+    private Set<Country> countries = new HashSet<>();
 
     @ToString.Exclude
     @OneToMany(mappedBy = "value", fetch = FetchType.EAGER)
-    private Set<Value> valueSet;
+    private Set<Value> values = new HashSet<>();
 
-    public Currency(String name, String code, Set<Country> countrySet, Set<Value> valueSet) {
+    public Currency(String name, String code) {
         this.name = name;
         this.code = code;
-        this.countrySet = countrySet;
-        this.valueSet = valueSet;
+    }
+
+    public void addCountry(Country country) {
+        countries.add(country);
+        country.setCurrency(this);
+    }
+
+    public void addValue(Value value) {
+        values.add(value);
+        value.setCurrency(this);
     }
 
 }

@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Getter
 @NoArgsConstructor
-@Table(name = "country")
+@Table(name = "value")
+@ToString
 @Entity
 public class Value {
 
@@ -22,7 +22,7 @@ public class Value {
     @Column(name = "value")
     private Double value;
 
-    @Column(name = "dateTime")
+    @Column(name = "date_time")
     private LocalDateTime dateTime;
 
     @ManyToOne
@@ -41,6 +41,10 @@ public class Value {
                 ", dateTime=" + dateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) +
                 ", currency=" + currency +
                 '}';
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 }
 
