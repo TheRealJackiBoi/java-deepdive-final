@@ -20,27 +20,30 @@ public class Country{
     @Column(name = "name")
     private String name;
 
-    @Column(name = "gdp")
-    private double gdp;
+    @Column(name = "capital")
+    private String capital;
 
     @Column(name = "area")
     private double area;
 
-    @Column(name = "gdp_growth")
-    private double gdpGrowth;
+    @Column(name = "population")
+    private int population;
 
-    @Column(name = "iso2")
-    private String iso2;
+    @Column(name = "cca3")
+    private String cca3;
 
     @ManyToOne
     private Currency currency;
 
-    public Country(String name, double gdp, double area, double gdpGrowth, String iso2, Currency currency) {
+    public Country(String name, String capital, double area, int population, String cca3) {
         this.name = name;
-        this.gdp = gdp;
+        this.capital = capital;
         this.area = area;
-        this.gdpGrowth = gdpGrowth;
-        this.iso2 = iso2;
+        this.population = population;
+        this.cca3 = cca3;
+    }
+
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 }

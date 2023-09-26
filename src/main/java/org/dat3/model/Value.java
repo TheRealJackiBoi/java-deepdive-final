@@ -33,5 +33,9 @@ public class Value {
         this.dateTime = dateTime;
         this.currency = currency;
     }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
 }
 

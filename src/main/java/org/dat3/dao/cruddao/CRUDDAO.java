@@ -70,4 +70,7 @@ abstract class CRUDDAO<T> implements DAOInterface<T> {
         }
     }
 
+    protected EntityManagerFactory getEmf() {
+        return emf;
+    }
 }
