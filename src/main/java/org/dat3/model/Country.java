@@ -26,7 +26,7 @@ public class Country{
     @Column(name = "area")
     private double area;
 
-    @Column(name = "gdpGrowth")
+    @Column(name = "gdp_growth")
     private double gdpGrowth;
 
     @Column(name = "iso2")
