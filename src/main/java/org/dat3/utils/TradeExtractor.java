@@ -1,13 +1,11 @@
 package org.dat3.utils;
 
-import jakarta.persistence.EntityManagerFactory;
 import org.dat3.dao.CurrencyDAO;
 import org.dat3.model.Currency;
 import org.dat3.model.Value;
 import org.jsoup.select.Elements;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Arrays;
 import java.util.List;
