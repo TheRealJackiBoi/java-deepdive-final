@@ -4,6 +4,12 @@ import org.jsoup.select.Elements;
 
 public interface Fetcher {
 
-    public Elements fetch(String url);
+    public static Elements fetch(String url) {
+        return null;
+    }
+
+    public static String fetch(String url, String currency) {
+        return null;
+    }
 
 }

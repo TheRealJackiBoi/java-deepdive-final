@@ -6,16 +6,20 @@ import org.jsoup.select.Elements;
 
 public class CountryFetcher implements Fetcher {
 
-    public Elements fetch(String url) {
 
+    public static String fetch(String url, String currency) {
+        String result = null;
         try {
 
-        Document doc = Jsoup.connect(url).get();
+            String completeUrl = url + "?currency=" + currency;
+            System.out.println(completeUrl);
+
+            result = HTTPUtils.fetchData(completeUrl);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return result;
     }
 
 }
