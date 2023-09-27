@@ -46,10 +46,15 @@ public class TradeExtractor {
                                     currency = new Currency(names, codes);
                                     currencyDAO.create(currency);
                                 }
-                                return new Value(
+                                // Create a new value object
+                                Value val = new Value(
                                     Double.parseDouble(doubleValue),
-                                    LocalDateTime.now(),
-                                    currency);
+                                    LocalDateTime.now());
+                                // Add the value object to the currency object
+                                currency.addValue(val);
+                                // Persist the new currency object
+                                currencyDAO.create(currency);
+                                return val;
                             })
                             .collect(Collectors.toList());
 
