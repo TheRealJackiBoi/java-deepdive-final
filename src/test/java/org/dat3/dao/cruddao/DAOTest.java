@@ -43,13 +43,14 @@ class DAOTest {
         sweden.setCurrency(svenskkrona);
         currencyDAO.create(svenskkrona);
 
+        /*
+
+        //values does not need a currency in next code verion
         Value value1 = new Value(7.44, java.time.LocalDateTime.now(), danskkrone);
         Value value2 = new Value(1.08, java.time.LocalDateTime.now(), svenskkrona);
         valueDAO.create(value1);
-        valueDAO.create(value2);
+        valueDAO.create(value2);*/
 
-        danskkrone.addValue(value1);
-        svenskkrona.addValue(value2);
     }
 
     /*
