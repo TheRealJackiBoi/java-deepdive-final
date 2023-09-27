@@ -22,6 +22,8 @@ public class CountryExtractor {
             CurrencyDAO currencyDAO = CurrencyDAO.getInstance();
             CountryDAO countryDAO = CountryDAO.getInstance();
 
+            Currency currency = null;
+
             try {
                 JsonArray obj = gson.fromJson(jsonStr, JsonArray.class);
 
@@ -49,9 +51,16 @@ public class CountryExtractor {
 
                     //currency
                     JsonObject currencyJson = jObject.get("currency").getAsJsonObject();
-                    Currency currency = currencyDAO.findById(Currency.class, currencyJson.get("code").getAsString());
 
+                    //Check if currency already exists
                     if (currency == null) {
+                        currency = currencyDAO.findById(Currency.class, currencyJson.get("code").getAsString());
+                        if (currency != null) {
+                            currency = new Currency(currencyJson.get("code").getAsString(), currencyJson.get("name").getAsString());
+                            currencyDAO.create(currency);
+                        }
+                    }
+                    else if (currency.getCode() != currencyJson.get("code").getAsString()) {
                         currency = new Currency(currencyJson.get("code").getAsString(), currencyJson.get("name").getAsString());
                         currencyDAO.create(currency);
                     }

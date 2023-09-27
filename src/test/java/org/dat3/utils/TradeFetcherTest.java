@@ -1,8 +1,11 @@
 package org.dat3.utils;
 
+import org.jsoup.select.Elements;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class TradeFetcherTest {
 
@@ -16,8 +19,17 @@ class TradeFetcherTest {
 
     @Test
     void fetch() {
+        // URL for scraping
         String url = "https://www.valutakurser.dk/";
-        TradeFetcher tf = new TradeFetcher();
-        System.out.println(tf.fetch(url));
+
+        // Fetch elements from the URL
+        Elements elements = TradeFetcher.fetch(url);
+
+        // Check if returned elements are NOT null and contain some data
+        assertNotNull(elements);
+        assertFalse(elements.isEmpty());
+
+        // Check if the returned elements contain some expected data
+        assertTrue(elements.toString().contains("USD"));
     }
 }
