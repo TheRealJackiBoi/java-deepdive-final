@@ -12,11 +12,8 @@ import lombok.ToString;
 @ToString
 @Entity
 public class Country{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, unique = true)
-    private int id;
 
+    @Id
     @Column(name = "name")
     private String name;
 
