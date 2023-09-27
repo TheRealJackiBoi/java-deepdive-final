@@ -10,9 +10,10 @@ import org.dat3.model.Currency;
 import org.dat3.model.Value;
 import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class DAOTest {
     private static EntityManagerFactory emf;
-    private static EntityManager em;
     private static final CountryDAO countryDAO = CountryDAO.getInstance();
     private static final CurrencyDAO currencyDAO = CurrencyDAO.getInstance();
     private static final ValueDAO valueDAO = ValueDAO.getInstance();
@@ -21,7 +22,6 @@ class DAOTest {
     static void setUp() {
         //creating the entity manager factory
         emf = HibernateConfigTEST.getEntityManagerFactoryConfig("valuta_test");
-        em = emf.createEntityManager();
 
         //setting the entity manager factory for the DAOs
         countryDAO.setEntityManagerFactory(emf);
@@ -74,12 +74,13 @@ class DAOTest {
 
     @AfterAll
     static void tearDown() {
+        //closing the entity manager factory
         emf.close();
     }
 
     @Test
     void getCurrency(){
-
+        assertEquals("DKK", currencyDAO.findById(Currency.class, "DKK").getCode());
     }
 
     @Test
