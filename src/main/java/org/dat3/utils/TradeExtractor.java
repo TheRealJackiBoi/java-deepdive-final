@@ -1,5 +1,6 @@
 package org.dat3.utils;
 
+import jakarta.persistence.EntityManagerFactory;
 import org.dat3.dao.CurrencyDAO;
 import org.dat3.dao.ValueDAO;
 import org.dat3.config.HibernateConfig;

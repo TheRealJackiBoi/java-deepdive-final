@@ -29,7 +29,7 @@ public class Currency {
     private Set<Country> countries = new HashSet<>();
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "value", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "currency", fetch = FetchType.EAGER)
     private Set<Value> values = new HashSet<>();
 
     public Currency(String name, String code) {
