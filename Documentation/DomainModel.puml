@@ -1,5 +1,12 @@
 @startuml
 
+skinparam style strictuml
+skinparam DefaultFontName Arial
+skinparam DefaultFontSize 16
+skinparam DefaultFontStyle bold
+skinparam ArrowThickness 2.2
+skinparam ArrowColor #black
+
 Class Country
 {
     String name
