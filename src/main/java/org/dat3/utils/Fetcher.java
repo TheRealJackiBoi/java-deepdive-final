@@ -11,5 +11,4 @@ public interface Fetcher {
     public static String fetch(String url, String currency) {
         return null;
     }
-
 }

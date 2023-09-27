@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @NoArgsConstructor
@@ -32,6 +33,15 @@ public class Value {
         this.value = value;
         this.dateTime = dateTime;
         this.currency = currency;
+    }
+
+    @Override
+    public String toString() {
+        return "Value{" +
+                "value=" + value +
+                ", dateTime=" + dateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) +
+                ", currency=" + currency +
+                '}';
     }
 
     public void setCurrency(Currency currency) {
