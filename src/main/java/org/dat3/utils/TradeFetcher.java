@@ -16,7 +16,6 @@ public class TradeFetcher implements Fetcher {
             Document doc = Jsoup.connect(url).get();
 
             // Returns all currency related data in the div to scrape
-            //return doc.select("div.currenciesList_popularCurrenciesContent__9WNtx");
             return doc.select("div.index_alphabeticalOrderContent__t3YSE");
 
         } catch (IOException e) {
