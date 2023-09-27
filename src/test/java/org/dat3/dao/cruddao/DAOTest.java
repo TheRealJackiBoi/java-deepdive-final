@@ -2,36 +2,57 @@ package org.dat3.dao.cruddao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Query;
 import org.dat3.dao.CountryDAO;
+import org.dat3.dao.CurrencyDAO;
 import org.dat3.dao.ValueDAO;
+import org.dat3.model.Country;
+import org.dat3.model.Currency;
+import org.dat3.model.Value;
 import org.junit.jupiter.api.*;
 
 class DAOTest {
     private static EntityManagerFactory emf;
     private static EntityManager em;
     private static final CountryDAO countryDAO = CountryDAO.getInstance();
-
-    //private final CurrencyDAO currencyDAO = CurrencyDAO.getInstance();
+    private static final CurrencyDAO currencyDAO = CurrencyDAO.getInstance();
     private static final ValueDAO valueDAO = ValueDAO.getInstance();
 
     @BeforeAll
     static void setUp() {
         //creating the entity manager factory
-        emf = jakarta.persistence.Persistence.createEntityManagerFactory("valutaTEST");
+        emf = HibernateConfigTEST.getEntityManagerFactoryConfig("valuta_test");
         em = emf.createEntityManager();
 
         //setting the entity manager factory for the DAOs
         countryDAO.setEntityManagerFactory(emf);
         valueDAO.setEntityManagerFactory(emf);
-        //currencyDAO.setEntityManagerFactory(emf);
+        currencyDAO.setEntityManagerFactory(emf);
     }
 
     @BeforeEach
     void setUpEach(){
+        Currency danskkrone = new Currency("Danish Krone", "DKK");
+        currencyDAO.create(danskkrone);
 
+        Country denmark = new Country("Denmark", "Copenhagen", 43094, 5717014, "DNK");
+        denmark.setCurrency(danskkrone);
+        countryDAO.create(denmark);
+
+        Country sweden = new Country("Sweden", "Stockholm", 450295, 10365705, "SEK");
+        Currency svenskkrona = new Currency("Swedish Krona", "SEK");
+        sweden.setCurrency(svenskkrona);
+        currencyDAO.create(svenskkrona);
+
+        Value value1 = new Value(7.44, java.time.LocalDateTime.now(), danskkrone);
+        Value value2 = new Value(1.08, java.time.LocalDateTime.now(), svenskkrona);
+        valueDAO.create(value1);
+        valueDAO.create(value2);
+
+        danskkrone.addValue(value1);
+        svenskkrona.addValue(value2);
     }
 
+    /*
     @AfterEach
     void cleanUp(){
         //truncates the tables after each test
@@ -48,9 +69,10 @@ class DAOTest {
         truncateQuery = em.createNativeQuery(truncateStatement);
         truncateQuery.executeUpdate();
         em.getTransaction().commit();
-    }
+    }*/
+
     @AfterAll
-    void tearDown() {
+    static void tearDown() {
         emf.close();
     }
 
