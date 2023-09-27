@@ -1,6 +1,7 @@
 package org.dat3.utils;
 
 import org.dat3.dao.CurrencyDAO;
+import org.dat3.dao.ValueDAO;
 import org.dat3.model.Currency;
 import org.dat3.model.Value;
 import org.jsoup.select.Elements;
@@ -16,7 +17,9 @@ public class TradeExtractor {
     public static List<Value> extractData(Elements elements) {
         //EntityManagerFactory emf = HibernateConfig.createEntityManagerFactoryConfig("DBNAME");
 
+        // Instantiate DAOs
         CurrencyDAO currencyDAO = CurrencyDAO.getInstance();
+        ValueDAO valueDao = ValueDAO.getInstance();
 
         List<Value> values = elements.stream()
                 .map(element -> {
@@ -46,10 +49,15 @@ public class TradeExtractor {
                                     currency = new Currency(names, codes);
                                     currencyDAO.create(currency);
                                 }
-                                return new Value(
+                                // Create a new value object
+                                Value val = new Value(
                                     Double.parseDouble(doubleValue),
-                                    LocalDateTime.now(),
-                                    currency);
+                                    LocalDateTime.now());
+                                // Add the value object to the currency object
+                                currency.addValue(val);
+                                // Persist the new currency object
+                                valueDAO.create(val);
+                                return val;
                             })
                             .collect(Collectors.toList());
 

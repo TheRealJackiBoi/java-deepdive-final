@@ -29,10 +29,9 @@ public class Value {
     @ManyToOne
     private Currency currency;
 
-    public Value(Double value, LocalDateTime dateTime, Currency currency) {
+    public Value(Double value, LocalDateTime dateTime) {
         this.value = value;
         this.dateTime = dateTime;
-        this.currency = currency;
     }
 
     @Override
