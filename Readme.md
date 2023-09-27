@@ -3,6 +3,10 @@
 
 This is our final project for Java Deep Dive. We will create an application that scrapes *insert website here* for the usefull data and analyze and display it in a meaningful way.
 
+## Sources
+- Valuta course: https://www.valutakurser.dk/
+- Country API: https://restcountries.com/v3.1/currency/
+
 ## Technologies
 
 - Java 17
