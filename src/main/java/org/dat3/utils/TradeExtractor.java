@@ -16,14 +16,15 @@ import java.util.stream.Collectors;
 public class TradeExtractor {
 
     public static List<Value> extractData(Elements elements) {
+        EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryConfig("valuta");
 
         // Instantiate DAOs
         CurrencyDAO currencyDAO = CurrencyDAO.getInstance();
         ValueDAO valueDAO = ValueDAO.getInstance();
 
         // Set EMFs
-        currencyDAO.setEntityManagerFactory(HibernateConfig.getEntityManagerFactoryConfig("valuta"));
-        valueDAO.setEntityManagerFactory(HibernateConfig.getEntityManagerFactoryConfig("valuta"));
+        currencyDAO.setEntityManagerFactory(emf);
+        valueDAO.setEntityManagerFactory(emf);
 
         List<Value> values = elements.stream()
                 .map(element -> {
