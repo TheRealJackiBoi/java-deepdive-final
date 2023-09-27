@@ -25,6 +25,12 @@ public class CountryExtractor {
 
                     //values
                     String name = jObject.get("name").getAsJsonObject().get("common").getAsString();
+
+                    //Check if country already exists
+                    if (countryDAO.findById(Country.class, name) != null) {
+                        continue;
+                    }
+
                     String capital = jObject.get("capital").getAsString();
                     double area = jObject.get("area").getAsDouble();
                     int population = jObject.get("population").getAsInt();
