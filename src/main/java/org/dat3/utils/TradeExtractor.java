@@ -56,7 +56,7 @@ public class TradeExtractor {
                                 // Add the value object to the currency object
                                 currency.addValue(val);
                                 // Persist the new currency object
-                                valueDAO.create(value);
+                                valueDAO.create(val);
                                 return val;
                             })
                             .collect(Collectors.toList());
