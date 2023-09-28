@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
 
 public class TradeExtractor {
 
+    /*
+    Bjarki's version
     public static List<Value> extractData(Elements elements) {
         //should probably have EMF as a parameter in method call, so it can easily be changed for the test database in the test class
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryConfig("valuta");
@@ -90,9 +92,9 @@ public class TradeExtractor {
         executorConfig.shutdownExecutorService();
 
         return values;
-    }
+    }*/
 
-    public static List<Value> extractDataNewVersion(Elements elements, EntityManagerFactory emf) {
+    public static List<Value> extractData(Elements elements, EntityManagerFactory emf) {
 
         // Instantiate DAOs
         CurrencyDAO currencyDAO = CurrencyDAO.getInstance();
