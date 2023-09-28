@@ -4,9 +4,11 @@ package org.dat3.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "country")
 @ToString
