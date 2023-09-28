@@ -11,7 +11,7 @@ public class CountryFetcher implements Fetcher {
         String result = null;
         try {
 
-            String completeUrl = url + "?currency=" + currency;
+            String completeUrl = url + currency;
             System.out.println(completeUrl);
 
             result = HTTPUtils.fetchData(completeUrl);
