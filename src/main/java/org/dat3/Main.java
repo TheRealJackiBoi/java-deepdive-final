@@ -2,6 +2,7 @@ package org.dat3;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import org.dat3.config.ExecutorServiceConfig;
 import org.dat3.config.HibernateConfig;
 import org.dat3.dao.CountryDAO;
 import org.dat3.dao.CurrencyDAO;
@@ -12,6 +13,8 @@ import org.dat3.utils.CountryFetcher;
 import org.dat3.utils.TradeExtractor;
 import org.dat3.utils.TradeFetcher;
 
+import java.util.concurrent.ExecutorService;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -21,9 +24,12 @@ public class Main {
         //emf
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryConfig("valuta");
 
+        ExecutorServiceConfig executorConfig = new ExecutorServiceConfig();
+        ExecutorService executorService = executorConfig.getExecutorService();
+
         //extract data from api and scrape
-        TradeExtractor.extractData(TradeFetcher.fetch("https://www.valutakurser.dk/"), emf);
-        CountryExtractor.extract(CountryFetcher.fetch(countryApiUrl, "USD"), emf, "USD");
+        executorService.submit(() -> TradeExtractor.extractData(TradeFetcher.fetch("https://www.valutakurser.dk/"), emf));
+        executorService.submit(() -> CountryExtractor.extract(CountryFetcher.fetch(countryApiUrl, "USD"), emf, "USD"));
 
         //daos
         CountryDAO countryDAO = CountryDAO.getInstance();

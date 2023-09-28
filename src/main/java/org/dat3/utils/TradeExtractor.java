@@ -32,7 +32,6 @@ public class TradeExtractor {
         valueDAO.setEntityManagerFactory(emf);
 
         //instantiate Executor service
-        //TODO: not sure what is used for ?
         ExecutorServiceConfig executorConfig = new ExecutorServiceConfig();
         ExecutorService executorService = executorConfig.getExecutorService();
 
