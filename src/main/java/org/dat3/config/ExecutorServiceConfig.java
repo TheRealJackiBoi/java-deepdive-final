@@ -4,7 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ExecutorServiceConfig {
-    private static final int threadCount = 4;
+    private static final int threadCount = 6;
     private ExecutorService executorService;
     public ExecutorService getExecutorService(){
         if (executorService == null){
