@@ -1,5 +1,8 @@
 package org.dat3.utils;
 
+import jakarta.persistence.EntityManagerFactory;
+import org.dat3.config.HibernateConfig;
+import org.dat3.dao.cruddao.HibernateConfigTEST;
 import org.dat3.model.Value;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,6 +19,7 @@ class TradeExtractorTest {
 
     @Test
     void extractData() throws IOException {
+        EntityManagerFactory emf = HibernateConfigTEST.getEntityManagerFactoryConfig("valuta_test");
         // HTML scraped & saved from website "www.valutakurser.dk" for testing 27/09/2023
         // This is to ensure that data is always consistent for testing purposes
         File input = new File("src/test/java/org/dat3/utils/testHTML.html");
@@ -23,7 +27,7 @@ class TradeExtractorTest {
 
         // Specify and extract elements from the HTML
         Elements elements = doc.select("div.index_alphabeticalOrderContent__t3YSE");
-        List<Value> values = TradeExtractor.extractData(elements);
+        List<Value> values = TradeExtractor.extractData(elements, emf);
 
         // Check if the title of the HTML is correct to ensure that the correct HTML is used
         System.out.println(doc.title());

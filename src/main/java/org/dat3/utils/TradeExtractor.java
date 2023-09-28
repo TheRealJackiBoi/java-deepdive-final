@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class TradeExtractor {
 
-    
+
     public static List<Value> extractData(Elements elements, EntityManagerFactory emf) {
 
         // Instantiate DAOs
