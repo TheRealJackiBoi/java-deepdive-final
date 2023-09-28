@@ -9,9 +9,6 @@ import java.io.IOException;
 public class TradeFetcher implements Fetcher {
 
     public static Elements fetch(String url) {
-        // URL to scrape data from
-        url = "https://www.valutakurser.dk/";
-
         try {
             Document doc = Jsoup.connect(url).get();
 

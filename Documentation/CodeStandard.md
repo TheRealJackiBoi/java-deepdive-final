@@ -1,16 +1,15 @@
-Code standard:
+# Coding standards
 
-Tuborgklammer på samme linje.
+Curly braces on put on same line as the statement.
 
-Datebase skrives med _ mellem ord. Camelcase bruges i alle java klasser.
-Man tester alle relevante metoder.
-Vi benytter LomBok.
+Database names use underscore "_" instead of spaces.
+We use CamelCase in all of our Java classes.
+Test all relevant methods.
+We use Lombok annotations for our entity classes.
 
-Benyt whitespeace til at overskueliggøre koden.
-Man skriver forklarende kommentarerne hvor det er nødvendigt.
+Utilize whitespace to make code more readable.
+Write comments for any convoluted code.
 
-
-
-Test:
-Persist nye objekter I before each. Sæt din connection op I en before all.
-Truncate table I after each. Close connection I after all.
+### Test-specific
+We persist new objects in #BeforeEach. Set up database connection in #BeforeAll.
+Truncate table in #AfterEach. Close connection in #AfterAll.
