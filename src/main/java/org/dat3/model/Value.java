@@ -3,12 +3,14 @@ package org.dat3.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "value")
 @ToString
