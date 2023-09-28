@@ -38,7 +38,7 @@ public class CountryExtractor {
                         continue;
                     }
 
-                    String capital = jObject.get("capital").getAsString();
+                    String capital = jObject.get("capital").getAsJsonArray().get(0).getAsString();
                     double area = jObject.get("area").getAsDouble();
                     int population = jObject.get("population").getAsInt();
                     String cca3 = jObject.get("cca3").getAsString();
