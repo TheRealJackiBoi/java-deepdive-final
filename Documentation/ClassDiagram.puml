@@ -12,11 +12,10 @@ class Currency {
 class Country {
     -int id
     -String name
-    -String isoCode
-    -double gdp
-    -double gdpGrowth
-    -double population
-    -double area
+    -String capital
+    -String cca3
+    -double are
+    -int population
 }
 
 class Value {
@@ -27,7 +26,6 @@ class Value {
 }
 
 class TradeDTO {
-    -int id
     -Currency base
     -Currency quote
     -double change
