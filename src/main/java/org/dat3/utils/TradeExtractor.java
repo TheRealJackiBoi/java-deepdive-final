@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 public class TradeExtractor {
 
     public static List<Value> extractData(Elements elements) {
+        //should probably have EMF as a parameter in method call, so it can easily be changed for the test database in the test class
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryConfig("valuta");
 
         // Instantiate DAOs
