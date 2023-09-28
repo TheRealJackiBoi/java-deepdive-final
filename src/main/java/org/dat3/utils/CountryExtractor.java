@@ -27,12 +27,7 @@ public class CountryExtractor {
             try {
                 JsonArray obj = gson.fromJson(jsonStr, JsonArray.class);
 
-                ExecutorConfig executorConfig = new ExecutorConfig();
-                ExecutorService executorService = executorConfig.getExecutorService();
-                AtomicInteger completedTasks = new AtomicInteger(0);
-
                 for (JsonElement jsonElement : obj) {
-                    executorService.submit(() -> {
 
                     JsonObject jObject = jsonElement.getAsJsonObject();
 
@@ -40,9 +35,9 @@ public class CountryExtractor {
                     String name = jObject.get("name").getAsJsonObject().get("common").getAsString();
 
                     //Check if country already exists
-                    //if (countryDAO.findById(Country.class, name) != null) {
-                    //    continue;
-                    //}
+                    if (countryDAO.findById(Country.class, name) != null) {
+                        continue;
+                    }
 
                     String capital = jObject.get("capital").getAsString();
                     double area = jObject.get("area").getAsDouble();
@@ -72,17 +67,7 @@ public class CountryExtractor {
 
                     countries.add(country);
 
-                    completedTasks.incrementAndGet();
-
-                    });
                 }
-                executorConfig.shutdownExecutorService();
-                executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
-
-                while (completedTasks.get() < obj.size()){
-                    Thread.sleep(100);
-                }
-
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -93,4 +78,6 @@ public class CountryExtractor {
     static Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .create();
+
+
 }
