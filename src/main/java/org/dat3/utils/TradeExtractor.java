@@ -1,5 +1,7 @@
 package org.dat3.utils;
 
+import jakarta.persistence.EntityManagerFactory;
+import org.dat3.config.ExecutorConfig;
 import org.dat3.dao.CurrencyDAO;
 import org.dat3.dao.ValueDAO;
 import org.dat3.config.HibernateConfig;
@@ -11,7 +13,9 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TradeExtractor {
 
@@ -26,8 +30,12 @@ public class TradeExtractor {
         currencyDAO.setEntityManagerFactory(emf);
         valueDAO.setEntityManagerFactory(emf);
 
-        List<Value> values = elements.stream()
-                .map(element -> {
+        //instantiate Executor service
+        ExecutorConfig executorConfig = new ExecutorConfig();
+        ExecutorService executorService = executorConfig.getExecutorService();
+
+        List<Value> values = elements.parallelStream()
+                .map(element -> executorService.submit(() -> {
                     // Fetches values from string and replaces comma with dot to parse properly to double
 
                     String doubles = element.select("div.currencyItem_actualValueContainer__2xLkB").text().replace(",", ".");
@@ -67,9 +75,18 @@ public class TradeExtractor {
                             .collect(Collectors.toList());
 
                     return subValues;
+                }))
+                .flatMap(future -> {
+                    try {
+                        return future.get().stream();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        return Stream.empty();
+                    }
+
                 })
-                .flatMap(Collection::stream)
                 .collect(Collectors.toList());
+        executorConfig.shutdownExecutorService();
 
         return values;
     }
