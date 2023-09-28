@@ -23,6 +23,7 @@ public class CountryExtractor {
                 JsonArray obj = gson.fromJson(jsonStr, JsonArray.class);
 
                 for (JsonElement jsonElement : obj) {
+
                     JsonObject jObject = jsonElement.getAsJsonObject();
 
                     //values
@@ -60,7 +61,9 @@ public class CountryExtractor {
                     countryDAO.create(country);
 
                     countries.add(country);
+
                 }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -70,4 +73,6 @@ public class CountryExtractor {
     static Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .create();
+
+
 }
