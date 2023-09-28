@@ -9,14 +9,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TradeFetcherTest {
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
     @Test
     void fetch() {
         // URL for scraping
