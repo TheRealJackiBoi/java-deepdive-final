@@ -12,7 +12,7 @@ import java.util.List;
 
 public class CountryExtractor {
 
-        public static List<Country> extract(String jsonStr, EntityManagerFactory emf) {
+        public static List<Country> extract(String jsonStr, EntityManagerFactory emf, String currencyCode) {
             List<Country> countries = new ArrayList<>();
 
             CurrencyDAO currencyDAO = CurrencyDAO.getInstance();
@@ -44,19 +44,16 @@ public class CountryExtractor {
                     String cca3 = jObject.get("cca3").getAsString();
 
                     //currency
-                    JsonObject currencyJson = jObject.get("currency").getAsJsonObject();
+                    JsonObject currencyJson = jObject.get("currencies").getAsJsonObject();
 
-                    //Check if currency already exists
+
+                    //Check if currency already exists in database and create it if not
                     if (currency == null) {
-                        currency = currencyDAO.findById(Currency.class, currencyJson.get("code").getAsString());
-                        if (currency != null) {
-                            currency = new Currency(currencyJson.get("code").getAsString(), currencyJson.get("name").getAsString());
+                        currency = currencyDAO.findById(Currency.class, currencyCode);
+                        if (currency == null) {
+                            currency = new Currency(currencyCode, currencyJson.get(currencyCode).getAsJsonObject().get("name").getAsString());
                             currencyDAO.create(currency);
                         }
-                    }
-                    else if (currency.getCode() != currencyJson.get("code").getAsString()) {
-                        currency = new Currency(currencyJson.get("code").getAsString(), currencyJson.get("name").getAsString());
-                        currencyDAO.create(currency);
                     }
 
                     //country
