@@ -1,7 +1,6 @@
 package org.dat3.utils;
 
 import com.google.gson.*;
-import org.dat3.config.ExecutorConfig;
 import org.dat3.dao.CountryDAO;
 import org.dat3.dao.CurrencyDAO;
 import org.dat3.model.Country;
@@ -9,10 +8,6 @@ import org.dat3.model.Currency;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class CountryExtractor {
 

@@ -1,7 +1,7 @@
 package org.dat3.utils;
 
 import jakarta.persistence.EntityManagerFactory;
-import org.dat3.config.ExecutorConfig;
+import org.dat3.config.ExecutorServiceConfig;
 import org.dat3.dao.CurrencyDAO;
 import org.dat3.dao.ValueDAO;
 import org.dat3.config.HibernateConfig;
@@ -10,12 +10,10 @@ import org.dat3.model.Value;
 import org.jsoup.select.Elements;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class TradeExtractor {
 
@@ -31,7 +29,7 @@ public class TradeExtractor {
         valueDAO.setEntityManagerFactory(emf);
 
         //instantiate Executor service
-        ExecutorConfig executorConfig = new ExecutorConfig();
+        ExecutorServiceConfig executorConfig = new ExecutorServiceConfig();
         ExecutorService executorService = executorConfig.getExecutorService();
 
         List<Value> values = elements.parallelStream()
