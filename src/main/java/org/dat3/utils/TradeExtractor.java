@@ -18,7 +18,8 @@ import java.util.stream.Collectors;
 public class TradeExtractor {
 
     public static List<Value> extractData(Elements elements) {
-        EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryConfig("valuta");
+        // Change name to "valuta" for real DB or "valuta_test" for testing
+        EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryConfig("valuta_test");
 
         // Instantiate DAOs
         CurrencyDAO currencyDAO = CurrencyDAO.getInstance();
@@ -28,62 +29,55 @@ public class TradeExtractor {
         currencyDAO.setEntityManagerFactory(emf);
         valueDAO.setEntityManagerFactory(emf);
 
-        //instantiate Executor service
+        // Instantiate Executor service
         ExecutorServiceConfig executorConfig = new ExecutorServiceConfig();
         ExecutorService executorService = executorConfig.getExecutorService();
 
-        List<Value> values = elements.parallelStream()
-                .map(element -> executorService.submit(() -> {
-                    // Fetches values from string and replaces comma with dot to parse properly to double
+        List<Value> values = elements.parallelStream().map(element -> executorService.submit(() -> {
+            // Fetches values from string and replaces comma with dot to parse properly to double
 
-                    String doubles = element.select("div.currencyItem_actualValueContainer__2xLkB").text().replace(",", ".");
+            String doubles = element.select("div.currencyItem_actualValueContainer__2xLkB").text().replace(",", ".");
 
-                    // Creates an array of the strings to make it possible to parse to double by removing the space
-                    String[] separateDoubles = doubles.split(" ");
+            // Creates an array of the strings to make it possible to parse to double by removing the space
+            String[] separateDoubles = doubles.split(" ");
 
-                    // Fetches currency codes
-                    String codes = element.select("div.currencyItem_currencySymbolContainer__RKWSP").text();
+            // Fetches currency codes
+            String codes = element.select("div.currencyItem_currencySymbolContainer__RKWSP").text();
 
-                    // Fetches Danish names of currencies
-                    String names = element.select("div.currencyItem_currencyNameContainer__19YHn").text();
+            // Fetches Danish names of currencies
+            String names = element.select("div.currencyItem_currencyNameContainer__19YHn").text();
 
-                    // Fetches percentage change in currency ready to be parsed to double if needed
-                    String change = element.select("div.currencyItem_currencyChangeContainer__pV3ni").text().replace(",", ".");
-                    String[] separateChange = change.split(" ");
+            // Fetches percentage change in currency ready to be parsed to double if needed
+            String change = element.select("div.currencyItem_currencyChangeContainer__pV3ni").text().replace(",", ".");
+            String[] separateChange = change.split(" ");
 
-                    // Creates objects from the scraped data
-                    List<Value> subValues = Arrays.stream(separateDoubles)
-                            .map(doubleValue -> {
-                                // Assigns a current currency to the object, but if it is not found, creates a new currency
-                                Currency currency = currencyDAO.findById(Currency.class, codes);
-                                if (currency == null) {
-                                    currency = new Currency(names, codes);
-                                    currencyDAO.create(currency);
-                                }
-                                // Create a new value object
-                                Value val = new Value(
-                                    Double.parseDouble(doubleValue),
-                                    LocalDateTime.now());
-                                // Add the value object to the currency object
-                                currency.addValue(val);
-                                // Persist the new currency object
-                                valueDAO.create(val);
-                                return val;
-                            })
-                            .collect(Collectors.toList());
+            // Creates objects from the scraped data
+            List<Value> subValues = Arrays.stream(separateDoubles).map(doubleValue -> {
+                // Assigns a current currency to the object, but if it is not found, creates a new currency
+                Currency currency = currencyDAO.findById(Currency.class, codes);
+                if (currency == null) {
+                    currency = new Currency(names, codes);
+                    currencyDAO.create(currency);
+                }
+                // Create a new value object
+                Value val = new Value(Double.parseDouble(doubleValue), LocalDateTime.now());
+                // Add the value object to the currency object
+                currency.addValue(val);
+                // Persist the new currency object
+                valueDAO.create(val);
+                return val;
+            }).collect(Collectors.toList());
 
-                    return subValues;
-                }))
-                .flatMap(future -> {
-                    try {
-                        return future.get().stream();
-                    }catch (Exception e){
-                        e.printStackTrace();
-                        return null;
-                    }
+            return subValues;
+        })).flatMap(future -> {
+            try {
+                return future.get().stream();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
 
-                })
-                .collect(Collectors.toList());
+        }).collect(Collectors.toList());
         executorConfig.shutdownExecutorService();
 
         return values;
