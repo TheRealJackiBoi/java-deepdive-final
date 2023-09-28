@@ -7,7 +7,7 @@
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [Screenshots](#screenshots)
-* [Potential_improvements](#potential-improvements)
+* [Potential improvements](#potential-improvements)
 * [Team members](#team-members)
 
 ## General info
@@ -53,11 +53,20 @@ One for testing (called "valuta_test") and one for development (called "valuta")
 ![](Documentation/EER-Diagram.png)
 
 This is an EER diagram of our database. It shows the relations between the different tables and how they are connected.
-A Class diagram and our domain model can be found in the "documentation" folder.
+
+![](Documentation/ClassDiagram.png)
+
+This is a class diagram to show the different Java classes we have implemented as well as their fields and relations.
+
+![](Documentation/DomainModel.png)
+
+Lastly we have a domain model to show the different entities and their relations, that are applicable to a real world scenario.
+
 
 ## Potential improvements
-We could have improved the program by implementing a way to handle countries having multiple currencies or multiple capitals (specific to South Africa).
-
+- We could have improved the program by implementing a way to handle countries having multiple currencies or multiple capitals (specific to South Africa).
+- It would also have been interesting to add a population density to the countries.
+- We also found an interesting website that had more currencies/countries than the one we used, but it was not possible for us to scrape the data from it.
 
 ## Team members
 - Jack - https://github.com/TheRealJackiBoi
