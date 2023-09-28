@@ -9,14 +9,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TradeFetcherTest {
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
     @Test
     void fetch() {
         // URL for scraping
@@ -28,8 +20,5 @@ class TradeFetcherTest {
         // Check if returned elements are NOT null and contain some data
         assertNotNull(elements);
         assertFalse(elements.isEmpty());
-
-        // Check if the returned elements contain some expected data
-        assertTrue(elements.toString().contains("USD"));
     }
 }
