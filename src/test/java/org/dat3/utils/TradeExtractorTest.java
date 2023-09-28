@@ -4,8 +4,6 @@ import org.dat3.model.Value;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -15,14 +13,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TradeExtractorTest {
-
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
 
     @Test
     void extractData() throws IOException {
