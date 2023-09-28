@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 public class TradeExtractor {
@@ -31,38 +32,49 @@ public class TradeExtractor {
         valueDAO.setEntityManagerFactory(emf);
 
         //instantiate Executor service
-
         //TODO: not sure what is used for ?
         ExecutorServiceConfig executorConfig = new ExecutorServiceConfig();
         ExecutorService executorService = executorConfig.getExecutorService();
 
-        List<Value> valueList = new ArrayList<>();
 
-        try{
-            for(Element div: elements.select("div.currencyItem_currencyItemWrapper__2-TKC")){
-                String currencyCode = div.select("div.currencyItem_currencySymbolContainer__RKWSP").text();
-                String currencyName = div.select("div.currencyItem_currencyNameContainer__19YHn").text();
-                String currencyValue = div.select("div.currencyItem_actualValueContainer__2xLkB").text().replace(",", ".");
-                String currencyChange = div.select("div.currencyItem_currencyChangeContainer__pV3ni").text().replace(",", ".");
-                String[] separateChange = currencyChange.split(" ");
-                String[] separateValue = currencyValue.split(" ");
+        List<Future<Value>> futures = new ArrayList<>();
+        //List<Value> valueList = new ArrayList<>();
 
-                Currency currency = currencyDAO.findById(Currency.class, currencyCode);
-                if (currency == null) {
-                    currency = new Currency(currencyName, currencyCode);
-                    currencyDAO.create(currency);
-                }
+        try {
+            for (Element div : elements.select("div.currencyItem_currencyItemWrapper__2-TKC")) {
+                Future<Value> future = executorService.submit(() -> {
+                    String currencyCode = div.select("div.currencyItem_currencySymbolContainer__RKWSP").text();
+                    String currencyName = div.select("div.currencyItem_currencyNameContainer__19YHn").text();
+                    String currencyValue = div.select("div.currencyItem_actualValueContainer__2xLkB").text().replace(",", ".");
+                    String currencyChange = div.select("div.currencyItem_currencyChangeContainer__pV3ni").text().replace(",", ".");
+                    String[] separateChange = currencyChange.split(" ");
+                    String[] separateValue = currencyValue.split(" ");
 
-                Value val = new Value(
-                        Double.parseDouble(separateValue[0]),
-                        LocalDateTime.now());
-                currency.addValue(val);
-                valueDAO.create(val);
-                valueList.add(val);
+                    Currency currency = currencyDAO.findById(Currency.class, currencyCode);
+                    if (currency == null) {
+                        currency = new Currency(currencyName, currencyCode);
+                        currencyDAO.create(currency);
+                    }
+
+                    Value val = new Value(
+                            Double.parseDouble(separateValue[0]),
+                            LocalDateTime.now());
+                    currency.addValue(val);
+                    valueDAO.create(val);
+                    return val;
+                });
+                futures.add(future);
             }
             executorConfig.shutdownExecutorService();
+            List<Value> valueList = new ArrayList<>();
+            for (Future<Value> future : futures) {
+                Value val = future.get();
+                if (val != null) {
+                    valueList.add(val);
+                }
+            }
             return valueList;
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
