@@ -1,0 +1,35 @@
+@startuml
+
+skinparam style strictuml
+skinparam DefaultFontName Arial
+skinparam DefaultFontSize 16
+skinparam DefaultFontStyle bold
+skinparam ArrowThickness 2.2
+skinparam ArrowColor #black
+
+Class Country
+{
+    String name
+    int gdp
+    double area
+    int gdp_growth
+    int gdp_per_capita
+    String iso2
+    int population
+}
+
+Class Currency
+{
+    String name
+    String code
+}
+
+Class Value
+{
+    Datetime datetime
+    int value[usd]
+}
+
+Country "*"--*"1" Currency
+Currency "*"--*"1" Value
+@enduml
