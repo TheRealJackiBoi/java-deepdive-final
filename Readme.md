@@ -7,6 +7,7 @@
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [Screenshots](#screenshots)
+* [Potential_improvements](#potential-improvements)
 * [Team members](#team-members)
 
 ## General info
@@ -53,6 +54,9 @@ One for testing (called "valuta_test") and one for development (called "valuta")
 
 This is an EER diagram of our database. It shows the relations between the different tables and how they are connected.
 A Class diagram and our domain model can be found in the "documentation" folder.
+
+## Potential improvements
+We could have improved the program by implementing a way to handle countries having multiple currencies or multiple capitals (specific to South Africa).
 
 
 ## Team members
