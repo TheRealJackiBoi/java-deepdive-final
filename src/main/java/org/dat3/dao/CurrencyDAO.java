@@ -2,7 +2,9 @@ package org.dat3.dao;
 
 import jakarta.persistence.EntityManager;
 import org.dat3.dao.cruddao.DAO;
+import org.dat3.model.Country;
 import org.dat3.model.Currency;
+import org.dat3.model.Value;
 
 public class CurrencyDAO extends DAO<Currency> {
 
@@ -26,4 +28,5 @@ public class CurrencyDAO extends DAO<Currency> {
             return null;
         }
     }
+
 }
