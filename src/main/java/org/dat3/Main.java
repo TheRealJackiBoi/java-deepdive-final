@@ -22,7 +22,7 @@ public class Main {
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryConfig("valuta");
 
         //extract data from api and scrape
-        TradeExtractor.extractData(TradeFetcher.fetch("https://www.valutakurser.dk/"));
+        TradeExtractor.extractDataNewVersion(TradeFetcher.fetch("https://www.valutakurser.dk/"), emf);
         CountryExtractor.extract(CountryFetcher.fetch(countryApiUrl, "USD"), emf);
 
         //daos
