@@ -23,7 +23,7 @@ public class Main {
 
         //extract data from api and scrape
         TradeExtractor.extractData(TradeFetcher.fetch("https://www.valutakurser.dk/"), emf);
-        CountryExtractor.extract(CountryFetcher.fetch(countryApiUrl, "USD"), emf);
+        CountryExtractor.extract(CountryFetcher.fetch(countryApiUrl, "USD"), emf, "USD");
 
         //daos
         CountryDAO countryDAO = CountryDAO.getInstance();
