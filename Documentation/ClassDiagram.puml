@@ -14,7 +14,7 @@ class Country {
     -String name
     -String capital
     -String cca3
-    -double are
+    -double area
     -int population
 }
 
