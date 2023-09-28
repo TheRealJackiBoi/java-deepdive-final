@@ -24,7 +24,7 @@ public class HibernateConfigTEST {
             Configuration configuration = new Configuration();
 
             Properties props = new Properties();
-            String connctionURL = String.format("jdbc:postgresql://localhost:5432/currencyDatabase?currentSchema=public", dbName);
+            String connctionURL = String.format("jdbc:postgresql://localhost:5432/%s?currentSchema=public", dbName);
             props.put("hibernate.connection.url", connctionURL);
             props.put("hibernate.connection.username", "postgres");
             props.put("hibernate.connection.password", "postgres");

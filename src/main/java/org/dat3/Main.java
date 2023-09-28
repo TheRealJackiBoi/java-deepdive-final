@@ -9,12 +9,7 @@ public class Main {
     public static void main(String[] args) {
 
         String countryApiUrl = "https://restcountries.com/v3.1/currency/";
-        EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryConfig("currencyDatabase");
-        try (EntityManager em = emf.createEntityManager()){
-            em.getTransaction().begin();
-            em.getTransaction().commit();
 
         }
 
     }
-}
