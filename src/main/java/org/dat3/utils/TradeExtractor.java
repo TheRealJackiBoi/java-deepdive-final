@@ -81,7 +81,7 @@ public class TradeExtractor {
                         return future.get().stream();
                     }catch (Exception e){
                         e.printStackTrace();
-                        return Stream.empty();
+                        return null;
                     }
 
                 })
