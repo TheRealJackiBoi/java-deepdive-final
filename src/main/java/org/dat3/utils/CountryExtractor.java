@@ -1,6 +1,7 @@
 package org.dat3.utils;
 
 import com.google.gson.*;
+import jakarta.persistence.EntityManagerFactory;
 import org.dat3.dao.CountryDAO;
 import org.dat3.dao.CurrencyDAO;
 import org.dat3.model.Country;
@@ -11,11 +12,14 @@ import java.util.List;
 
 public class CountryExtractor {
 
-        public static List<Country> extract(String jsonStr) {
+        public static List<Country> extract(String jsonStr, EntityManagerFactory emf) {
             List<Country> countries = new ArrayList<>();
 
             CurrencyDAO currencyDAO = CurrencyDAO.getInstance();
             CountryDAO countryDAO = CountryDAO.getInstance();
+
+            currencyDAO.setEntityManagerFactory(emf);
+            countryDAO.setEntityManagerFactory(emf);
 
             Currency currency = null;
 
